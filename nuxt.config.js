@@ -120,14 +120,14 @@ export default {
         '@nuxtjs/auth-next'
     ],
 
-    // Axios module configuration: https://go.nuxtjs.dev/config-axios
-    axios: {
-        // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-        baseURL: 'https://phplaravel-670314-2397630.cloudwaysapps.com',
-        credentials: true,
+    proxy: {
+        '/api/': {
+          target: 'https://phplaravel-670314-2397630.cloudwaysapps.com/api/',
+          pathRewrite: { '^/api/': '/' }
+        }
+      },
 
-    },
-    auth: {
+      auth: {
         strategies: {
             'laravelSanctum': {
                 provider: 'laravel/sanctum',
@@ -155,6 +155,14 @@ export default {
 
         }
     },
+    // Axios module configuration: https://go.nuxtjs.dev/config-axios
+    axios: {
+        // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
+        baseURL: 'https://phplaravel-670314-2397630.cloudwaysapps.com',
+        credentials: true,
+        proxy:true,
+    },
+    
 
     // PWA module configuration: https://go.nuxtjs.dev/pwa
     pwa: {
