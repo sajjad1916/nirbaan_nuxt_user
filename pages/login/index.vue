@@ -135,7 +135,6 @@ export default {
     form: {
       phone: "",
       password: "",
-      isLoading: false,
     },
     isLoading: false,
     user: {},
@@ -151,10 +150,14 @@ export default {
       }
       try{
         this.isLoading=true;
-       await this.$auth.loginWith("laravelSanctum", { data: this.form });
-       await this.$auth.$storage.setUniversal(this.$auth.user, this.$auth.user);
+       await this.$auth.loginWith("laravelSanctum", { data: this.form })
+       .then((res)=>{
+        this.$auth.$storage.setUniversal('user', res.data.user);
+        this.$auth.$storage.setUniversal('loggedIn',true);
+       }).catch((err)=>{
+         console.log(err)
+       });
        this.isLoading=false;
-       console.log(this.$auth.loggedIn)
        console.log(this.$auth.user);
        this.$router.push('/dashboard');
       }
