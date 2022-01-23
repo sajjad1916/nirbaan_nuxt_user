@@ -139,6 +139,9 @@ export default {
                     logout: {
                         url: '/api/logout'
                     },
+                    user: {
+                        url: '/api/user'
+                    },
                     home: {
                         url: "/dashboard"
                     }
