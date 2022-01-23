@@ -319,7 +319,7 @@
                 </v-select>
               </div>
 
-            <div
+              <div
                 class="sm:col-span-2"
                 v-else-if="this.PackageTypesId == 'Birthday Cake Delivery'"
               >
@@ -353,10 +353,7 @@
                 </v-select>
               </div>
 
-              <div
-                class="sm:col-span-2"
-                v-else
-              >
+              <div class="sm:col-span-2" v-else>
                 <label
                   for="company"
                   class="block text-gray-800 text-sm sm:text-base mb-2"
@@ -446,15 +443,20 @@
                 </v-select>
               </div>
 
-              <div class="sm:col-span-2 pt-2"> 
+              <div class="sm:col-span-2 pt-2">
                 <p class="text-xl font-bold pb-2">
-                  Collection Money : {{ this.ProductPrice }}  
-                  <br> 
-                    Delivery Charge:
-                  {{ this.DeliveryFee + this.ProductWeight}}
-                 
+                  Collection Money : {{ this.ProductPrice }}
+                  <br />
+                  Delivery Charge:
+                  {{ this.DeliveryFee + this.ProductWeight }}
                 </p>
-                <p class="text-2xl font-bold">Total: {{ parseInt(this.ProductPrice || 0) - (parseInt((this.DeliveryFee + this.ProductWeight) || 0)) }}</p>
+                <p class="text-2xl font-bold">
+                  Total:
+                  {{
+                    parseInt(this.ProductPrice || 0) -
+                    parseInt(this.DeliveryFee + this.ProductWeight || 0)
+                  }}
+                </p>
               </div>
             </div>
 
@@ -510,12 +512,12 @@
 import Loading from "~/components/common/loading.vue";
 export default {
   // middleware:'auth',
-   components: {
+  components: {
     Loading,
   },
   data() {
     return {
-      isLoading:false,
+      isLoading: false,
       PackageTypesId: "",
       CustomerName: "",
       CustomerPhone: "",
@@ -530,27 +532,25 @@ export default {
       AreaOption: [],
       PackageTypes: [],
       ParcelTypes: ["Breakable", "Liquid"],
-      PaymentMethods:[],
-      PaymentMethodsId:'',
-      ProductWeights: 
-      [
-        
+      PaymentMethods: [],
+      PaymentMethodsId: "",
+      ProductWeights: [
         {
-           distanceAmount: "1KG",
-           deliveryFee: 0,
-        }, 
+          distanceAmount: "1KG",
+          deliveryFee: 0,
+        },
         {
-           distanceAmount: "2KG",
-           deliveryFee: 30,
-        }, 
+          distanceAmount: "2KG",
+          deliveryFee: 30,
+        },
         {
-           distanceAmount: "3KG",
-           deliveryFee: 60,
-        }, 
+          distanceAmount: "3KG",
+          deliveryFee: 60,
+        },
         {
-           distanceAmount: "4KG",
-           deliveryFee: 80,
-        }, 
+          distanceAmount: "4KG",
+          deliveryFee: 80,
+        },
       ],
       Distance: [
         {
@@ -566,8 +566,8 @@ export default {
           deliveryFee: 180,
         },
       ],
-      BirthdayDistance:[
-         {
+      BirthdayDistance: [
+        {
           distanceAmount: "1-6 KM",
           deliveryFee: 150,
         },
@@ -580,8 +580,8 @@ export default {
           deliveryFee: 200,
         },
       ],
-      ParcelDelivery:[
-         {
+      ParcelDelivery: [
+        {
           distanceAmount: "Inside Dhaka",
           deliveryFee: 60,
         },
@@ -604,15 +604,24 @@ export default {
 
   methods: {
     async PlaceOrder() {
-      
-      if (!this.CustomerName || !this.CustomerPhone ||!this.CustomerAddress ||!this.DeliveryHub ||!this.MerchantName ||!this.MerchantPhone || !this.MerchantAddress||!this.ProductWeight || !this.ProductPrice) {
+      if (
+        !this.CustomerName ||
+        !this.CustomerPhone ||
+        !this.CustomerAddress ||
+        !this.DeliveryHub ||
+        !this.MerchantName ||
+        !this.MerchantPhone ||
+        !this.MerchantAddress ||
+        !this.ProductWeight ||
+        !this.ProductPrice
+      ) {
         alert("Please fill the form");
-       
+
         return;
       }
 
       try {
-        this.isLoading=true;
+        this.isLoading = true;
         await this.$axios.$get("sanctum/csrf-cookie");
         const res = await this.$axios.$post("/api/orders", {
           weight: this.ProductWeight,
@@ -624,15 +633,14 @@ export default {
           productClass: this.ProductClass,
           deliveryHub: this.DeliveryHub,
           delivery_fee: this.DeliveryFee + this.ProductWeight,
-          package_type_id:this.PackageTypesId,
-          payment_method_id:this.PaymentMethodsId,
-          total:this.ProductPrice 
+          package_type_id: this.PackageTypesId,
+          payment_method_id: this.PaymentMethodsId,
+          total: this.ProductPrice,
         });
         console.log(res);
         this.$router.push("/dashboard/orders");
-        
       } catch (err) {
-        this.isLoading=false;
+        this.isLoading = false;
         console.log(err);
       }
     },
@@ -644,16 +652,23 @@ export default {
     },
     async getPackageTypes() {
       const res = await this.$axios.$get("/api/package/types");
-      this.PackageTypes = res
-      
+      this.PackageTypes = res;
     },
 
     async getPaymentTypes() {
-      const res = await this.$axios.$get("/api/payment/methods");
-      this.PaymentMethods = res.data;
-     
-    }
-
+      const res = await this.$axios
+        .$get("/api/payment/methods", {
+          headers: {
+            Authorization: `Bearer ${this.$auth.$storage.state.user.token}`,
+          },
+        })
+        .then((res) => {
+          this.PaymentMethods = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>

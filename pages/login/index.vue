@@ -30,7 +30,6 @@
               <input
                 name="phone"
                 v-model="form.phone"
-                required
                 class="
                   w-full
                   bg-gray-50
@@ -58,7 +57,6 @@
                 name="password"
                 type="password"
                 v-model="form.password"
-                required
                 class="
                   w-full
                   bg-gray-50
@@ -125,7 +123,7 @@
 </template>
 
 <script>
-import sidebar from '~/components/dashboard/sidebar.vue';
+import sidebar from "~/components/dashboard/sidebar.vue";
 import guest from "~/middleware/guest";
 import Loading from "~/components/common/loading.vue";
 export default {
@@ -139,32 +137,80 @@ export default {
     isLoading: false,
     user: {},
   }),
+
   methods: {
     async login() {
-      if (!this.form.password || !this.form.phone) {
-        alert("Please fill the form");
-        return;
-      }
-      if (!this.phoneIsValid(this.form.phone)) {
-        alert("Invalid Input");
-      }
-      try{
-        this.isLoading=true;
-       await this.$auth.loginWith("laravelSanctum", { data: this.form })
-       .then((res)=>{
-        this.$auth.$storage.setUniversal('user', res.data.user);
-        this.$auth.$storage.setUniversal('loggedIn',true);
-       }).catch((err)=>{
-         console.log(err)
-       });
-       this.isLoading=false;
-       console.log(this.$auth.user);
-       this.$router.push('/dashboard');
-      }
-      catch{
-        console.log('error occured')
-      }
-      
+      // if (!this.form.password || !this.form.phone) {
+      //   alert("Please fill the form");
+      //   return;
+      // }
+      // if (!this.phoneIsValid(this.form.phone)) {
+      //   alert("Invalid Input");
+      // }
+      // try {
+      //   this.isLoading = true;
+      //   await this.$axios.$get("sanctum/csrf-cookie").then(()=>{
+      //     this.$auth.loginWith("laravelSanctum", { data: this.form });
+      //     this.$auth.$storage.setUniversal("user", res.data);
+      //     this.$auth.$storage.setUniversal("loggedIn", true);
+      //     console.log(this.$auth.user);
+      //     this.$router.push("/dashboard");
+      //   }).catch((err)=>{
+      //     console.log(err)
+      //   })
+      // await this.$auth
+      //   .loginWith("laravelSanctum", { data: this.form })
+      //   .then((res) => {
+      //     this.$auth.$storage.setUniversal("user", res.data);
+      //
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      // this.isLoading = false;
+      // console.log(this.$auth.user);
+      // this.$router.push('/api/user');
+      // this.$router.push("/dashboard");
+      // } catch {
+      //   console.log("error occured");
+      // }
+      await this.$axios
+        .$get("sanctum/csrf-cookie")
+        .then(() => {
+          this.$auth
+            .loginWith("laravelSanctum", {
+              data: {
+                phone: "1963629753",
+                password: "12345678",
+              },
+            })
+            .then((res) => {
+              console.log(this.$auth.$storage.state.user.token);
+              this.$auth.$storage.setUniversal("user", res.data);
+              this.$auth.$storage.setUniversal("loggedIn", true);
+              this.$axios
+                .$get("/api/user", {
+                  headers: {
+                    Authorization: `Bearer ${res.data.token}`,
+                  },
+
+                })
+                .then((res) => {
+                  console.log(res)
+                  
+                  this.$router.push("/dashboard");
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     phoneIsValid(phone) {
       const reg = new RegExp("^[0-9]+$");

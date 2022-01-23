@@ -122,7 +122,8 @@ export default {
 
     proxy: {
         '/api/': {
-          target: 'https://phplaravel-670314-2397630.cloudwaysapps.com/api/',
+          target: 'https://phplaravel-670314-2397630.cloudwaysapps.com/api',
+        // target:'http://localhost:8000/api/',
           pathRewrite: { '^/api/': '/' }
         }
       },
@@ -132,6 +133,7 @@ export default {
             'laravelSanctum': {
                 provider: 'laravel/sanctum',
                 url: 'https://phplaravel-670314-2397630.cloudwaysapps.com',
+                // url:'http://localhost:8000',
                 endpoints: {
                     login: {
                         url: '/api/login'
@@ -141,9 +143,6 @@ export default {
                     },
                     user: {
                         url: '/api/user'
-                    },
-                    home: {
-                        url: "/dashboard"
                     }
                 }
             },
@@ -159,8 +158,10 @@ export default {
     axios: {
         // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
         baseURL: 'https://phplaravel-670314-2397630.cloudwaysapps.com',
+        // baseURL:'http://localhost:8000',
         credentials: true,
         proxy:true,
+        
     },
     
 

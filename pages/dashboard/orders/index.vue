@@ -245,9 +245,19 @@ export default {
   methods: {
     async getOrders() {
       this.isLoading = true;
-      const res = await this.$axios.$get("/api/orders");
-      this.orders = res.data;
-      console.log(this.orders);
+       await this.$axios
+        .$get("/api/orders", {
+          headers: {
+            Authorization: `Bearer ${this.$auth.$storage.state.user.token}`,
+          },
+        })
+        .then((res) => {
+          this.orders = res.data;
+          console.log(this.orders);
+          this.isLoading=false
+        }).catch((err)=>{
+          console.log(err);
+        })
     },
 
     onChangePage(pageOfItems) {
