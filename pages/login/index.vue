@@ -175,7 +175,7 @@ export default {
       //   console.log("error occured");
       // }
       await this.$axios
-        .$get("sanctum/csrf-cookie")
+        .$get("/sanctum/csrf-cookie")
         .then(() => {
           this.$auth
             .loginWith("laravelSanctum", {
