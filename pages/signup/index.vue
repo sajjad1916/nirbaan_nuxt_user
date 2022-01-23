@@ -351,11 +351,10 @@ export default {
             pickupHub: this.pickupArea,
             actype: this.accountType,
             acnumber:this.accountNumber
+        }).then(()=>{
+          this.$router.push('/login');
         })
-        await this.$auth.loginWith('laravelSanctum', {
-          phone:this.phone,
-          password:this.password
-        })
+        
          
         console.log(res);
       } catch (err) {

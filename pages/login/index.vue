@@ -29,6 +29,7 @@
               >
               <input
                 name="phone"
+                required
                 v-model="form.phone"
                 class="
                   w-full
@@ -56,6 +57,7 @@
               <input
                 name="password"
                 type="password"
+                required
                 v-model="form.password"
                 class="
                   w-full
@@ -140,13 +142,13 @@ export default {
 
   methods: {
     async login() {
-      // if (!this.form.password || !this.form.phone) {
-      //   alert("Please fill the form");
-      //   return;
-      // }
-      // if (!this.phoneIsValid(this.form.phone)) {
-      //   alert("Invalid Input");
-      // }
+      if (!this.form.password || !this.form.phone) {
+        alert("Please fill the form");
+        return;
+      }
+      if (!this.phoneIsValid(this.form.phone)) {
+        alert("Invalid Input");
+      }
       // try {
       //   this.isLoading = true;
       //   await this.$axios.$get("sanctum/csrf-cookie").then(()=>{
@@ -175,13 +177,13 @@ export default {
       //   console.log("error occured");
       // }
       await this.$axios
-        .$get("https://phplaravel-670314-2397630.cloudwaysapps.com/sanctum/csrf-cookie")
+        .$get("/sanctum/csrf-cookie")
         .then(() => {
           this.$auth
             .loginWith("laravelSanctum", {
               data: {
-                phone: "1963629753",
-                password: "12345678",
+                phone: "",
+                password: "",
               },
             })
             .then((res) => {

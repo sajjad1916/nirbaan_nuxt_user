@@ -10,7 +10,7 @@
             href="/"
             aria-label="Our product"
             title="Our product"
-            class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+            class="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400 "
             >Product</a
           >
         </li>
@@ -59,7 +59,7 @@
           >Nirbaan Express</span
         >
       </a>
-      <ul class="flex items-center hidden ml-auto space-x-8 lg:flex">
+      <ul class="flex items-center ml-auto space-x-8 lg:flex ">
         <li>
           <a
             href="/login"
@@ -80,7 +80,8 @@
           </a>
         </li>
       </ul>
-      <div class="ml-auto lg:hidden">
+
+      <!-- <div class="ml-auto lg:hidden">
         <button
           aria-label="Open Menu"
           title="Open Menu"
@@ -201,7 +202,7 @@
             </nav>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
  <!-- Hero section -->

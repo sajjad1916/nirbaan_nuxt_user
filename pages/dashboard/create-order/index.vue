@@ -622,23 +622,37 @@ export default {
 
       try {
         this.isLoading = true;
-        await this.$axios.$get("sanctum/csrf-cookie");
-        const res = await this.$axios.$post("/api/orders", {
-          weight: this.ProductWeight,
-          productPrice: this.ProductPrice,
-          merchantAddress: this.MerchantAddress,
-          customerName: this.CustomerName,
-          customerPhone: this.CustomerPhone,
-          customerAddress: this.CustomerAddress,
-          productClass: this.ProductClass,
-          deliveryHub: this.DeliveryHub,
-          delivery_fee: this.DeliveryFee + this.ProductWeight,
-          package_type_id: this.PackageTypesId,
-          payment_method_id: this.PaymentMethodsId,
-          total: this.ProductPrice,
-        });
-        console.log(res);
-        this.$router.push("/dashboard/orders");
+        await this.$axios.$get("/sanctum/csrf-cookie");
+        await this.$axios
+          .$post(
+            "/api/orders",
+            {
+              weight: this.ProductWeight,
+              productPrice: this.ProductPrice,
+              merchantAddress: this.MerchantAddress,
+              customerName: this.CustomerName,
+              customerPhone: this.CustomerPhone,
+              customerAddress: this.CustomerAddress,
+              productClass: this.ProductClass,
+              deliveryHub: this.DeliveryHub,
+              delivery_fee: this.DeliveryFee + this.ProductWeight,
+              package_type_id: this.PackageTypesId,
+              payment_method_id: this.PaymentMethodsId,
+              total: this.ProductPrice,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${this.$auth.$storage.state.user.token}`,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res);
+            this.$router.push("/dashboard/orders");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } catch (err) {
         this.isLoading = false;
         console.log(err);
