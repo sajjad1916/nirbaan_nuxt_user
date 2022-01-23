@@ -371,6 +371,7 @@ export default {
      const res = await this.$axios.$get(
           "/api/delivery"
         );
+        console.log(res);
         
        for(let i=0;i<res.length;i++){
          this.option.push(res[i].name)
