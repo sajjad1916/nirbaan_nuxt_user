@@ -154,6 +154,8 @@ export default {
        await this.$auth.loginWith("laravelSanctum", { data: this.form });
        await this.$auth.$storage.setUniversal(this.$auth.user, this.$auth.user);
        this.isLoading=false;
+       console.log(this.$auth.loggedIn)
+       console.log(this.$auth.user);
        this.$router.push('/dashboard');
       }
       catch{
