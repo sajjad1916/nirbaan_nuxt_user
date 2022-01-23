@@ -104,7 +104,7 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: ['~/plugins/v-select.js',
-                '~/plugins/js-vue-pagination.js'
+        '~/plugins/js-vue-pagination.js'
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -131,7 +131,7 @@ export default {
         strategies: {
             'laravelSanctum': {
                 provider: 'laravel/sanctum',
-                url: 'https://phplaravel-670314-2397630.cloudwaysapps.com/',
+                url: 'https://phplaravel-670314-2397630.cloudwaysapps.com',
                 endpoints: {
                     login: {
                         url: '/api/login'
@@ -139,8 +139,8 @@ export default {
                     logout: {
                         url: '/api/logout'
                     },
-                    home:{
-                        url:"/dashboard"
+                    home: {
+                        url: "/dashboard"
                     }
                 }
             },
