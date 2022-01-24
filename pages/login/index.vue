@@ -181,10 +181,7 @@ export default {
         .then(() => {
           this.$auth
             .loginWith("laravelSanctum", {
-              data: {
-                phone: "",
-                password: "",
-              },
+              data:this.form,
             })
             .then((res) => {
               console.log(this.$auth.$storage.state.user.token);
