@@ -181,11 +181,9 @@ export default {
         .$get("/sanctum/csrf-cookie")
         .then(() => {
          this.$auth
-            .loginWith("laravelSanctum", {
-              // data: this.form,
-              data:{
-                phone:"1963629753",password:"12345678"
-              }
+            .loginWith("laravelSanctum", { 
+              data:this.form,
+
             })
             .then((res) => {
               console.log(this.$auth.$storage.state.user.token);
