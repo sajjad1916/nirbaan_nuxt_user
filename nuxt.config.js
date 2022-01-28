@@ -1,8 +1,6 @@
 export default {
-    // Target: https://go.nuxtjs.dev/config-target
     target: 'static',
 
-    // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
         title: 'Nirbaan Express',
         meta: [{
@@ -70,19 +68,16 @@ export default {
             rel: 'icon',
             type: 'image/x-icon',
             href: '/favicon.ico'
-        }],
+        },
+        { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.3.1/css/all.css' }],
         script: [
-            /*{
-                    src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js',
-                    integrity: "sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM",
-                    crossorigin: "anonymous"
-                  },*/
-            /*{
-              async: true,
-              src: '/bootstrap/main.js',
-            }*/
+          
             {
                 src: "https://cdn.tailwindcss.com"
+            },
+            {
+                src:"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"
+
             }
         ],
     },

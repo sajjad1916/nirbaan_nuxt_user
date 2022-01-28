@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Sidenav />
     <div v-if="isLoading"><Loading /></div>
     <div
       v-else
@@ -27,7 +28,7 @@
           <h2 class="text-3xl text-green-600 font-bold">{{ order.status }}</h2>
         </div>
       </div>
-      <div class="h-screen w-1/3 bg-gray-200">
+      <div class="h-screen w-1/3 bg-gray-200 pt-10">
         <h1 class="text-3xl font-bold text-center pb-20">Order Info</h1>
         <p class="text-xl font-medium text-left pl-4">Customer Name</p>
         <p class="text-xl font-bold text-left font-bold pl-6 pb-3">
@@ -67,8 +68,8 @@
 
 <script>
 import Loading from "~/components/common/loading.vue";
+import Sidenav from "~/components/dashboard/Sidenav.vue";
 export default {
-  layout: "dashboard",
   data() {
     return {
       order: [],
@@ -77,6 +78,7 @@ export default {
   },
   components: {
     Loading,
+    Sidenav
   },
   mounted() {
     this.getOrders();

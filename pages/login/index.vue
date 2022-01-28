@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navbar />
     <div v-if="this.isLoading"><Loading /></div>
     <div v-else class="bg-white py-6 sm:py-8 lg:py-12">
       <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
@@ -29,7 +30,7 @@
               >
               <input
                 name="phone"
-                required
+              
                 v-model="form.phone"
                 class="
                   w-full
@@ -57,7 +58,7 @@
               <input
                 name="password"
                 type="password"
-                required
+                
                 v-model="form.password"
                 class="
                   w-full
@@ -125,11 +126,11 @@
 </template>
 
 <script>
-import sidebar from "~/components/dashboard/sidebar.vue";
+import Navbar from '~/components/home/Navbar.vue'
 import guest from "~/middleware/guest";
 import Loading from "~/components/common/loading.vue";
 export default {
-  components: { sidebar, Loading },
+  components: {Loading, Navbar },
   middleware: guest,
   data: () => ({
     form: {
@@ -142,13 +143,13 @@ export default {
 
   methods: {
     async login() {
-      if (!this.form.password || !this.form.phone) {
-        alert("Please fill the form");
-        return;
-      }
-      if (!this.phoneIsValid(this.form.phone)) {
-        alert("Invalid Input");
-      }
+      // if (!this.form.password || !this.form.phone) {
+      //   alert("Please fill the form");
+      //   return;
+      // }
+      // if (!this.phoneIsValid(this.form.phone)) {
+      //   alert("Invalid Input");
+      // }
       // try {
       //   this.isLoading = true;
       //   await this.$axios.$get("sanctum/csrf-cookie").then(()=>{
@@ -179,23 +180,23 @@ export default {
       await this.$axios
         .$get("/sanctum/csrf-cookie")
         .then(() => {
-          this.$auth
+         this.$auth
             .loginWith("laravelSanctum", {
-              data: {
-                phone: "",
-                password: "",
-              },
+              // data: this.form,
+              data:{
+                phone:"1963629753",password:"12345678"
+              }
             })
             .then((res) => {
               console.log(this.$auth.$storage.state.user.token);
               this.$auth.$storage.setUniversal("user", res.data);
               this.$auth.$storage.setUniversal("loggedIn", true);
-              this.$axios
+              
+             this.$axios
                 .$get("/api/user", {
                   headers: {
                     Authorization: `Bearer ${res.data.token}`,
                   },
-
                 })
                 .then((res) => {
                   console.log(res)

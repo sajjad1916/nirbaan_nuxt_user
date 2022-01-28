@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="container">
+    <Sidenav />
+    <div class="container mx-auto">
       <div class="text-left text-3xl text-black pl-6 pt-4">Payments Info</div>
       <div v-if="isLoading"><Loading /></div>
       <div v-else class="flex flex-col pt-4">
@@ -244,6 +245,7 @@
 
 <script>
 import Loading from "~/components/common/loading.vue";
+import Sidenav from "~/components/dashboard/Sidenav.vue";
 export default {
   data() {
     return {
@@ -254,8 +256,8 @@ export default {
   },
   components: {
     Loading,
+    Sidenav
   },
-  layout: "dashboard",
 
   mounted() {
     this.getOrders();

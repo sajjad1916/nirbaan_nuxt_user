@@ -1,7 +1,8 @@
 <template>
   <div>
+    <Sidenav />
     <div v-if="isLoading"><Loading /></div>
-    <div v-else class="bg-white py-6 sm:py-8 lg:py-12">
+    <div v-else class="container mx-auto bg-white py-6 sm:py-8 lg:py-12">
       <div class="w-full px-4 md:px-8 mx-auto">
         <form @submit.prevent="PlaceOrder">
           <!-- text - start -->
@@ -510,10 +511,12 @@
 
 <script>
 import Loading from "~/components/common/loading.vue";
+import Sidenav from "~/components/dashboard/Sidenav.vue";
 export default {
   // middleware:'auth',
   components: {
     Loading,
+    Sidenav
   },
   data() {
     return {
@@ -600,7 +603,6 @@ export default {
     this.getPackageTypes();
     this.getPaymentTypes();
   },
-  layout: "dashboard",
 
   methods: {
     async PlaceOrder() {

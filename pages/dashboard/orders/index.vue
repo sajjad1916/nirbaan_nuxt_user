@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="container">
+    <Sidenav />
+    <div class="container mx-auto">
       <Loading v-if="isLoading" />
       <div class="text-center text-2xl pt-4">Orders Table</div>
       <div class="flex flex-col pt-4">
@@ -227,6 +228,7 @@
 
 <script>
 import Loading from "~/components/common/loading.vue";
+import Sidenav from "~/components/dashboard/Sidenav.vue";
 export default {
   data() {
     return {
@@ -235,9 +237,9 @@ export default {
       pageOfItems: [],
     };
   },
-  layout: "dashboard",
   components: {
     Loading,
+    Sidenav
   },
   mounted() {
     this.getOrders();

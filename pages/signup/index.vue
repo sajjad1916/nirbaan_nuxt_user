@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navbar />
     <div class="bg-white py-6 sm:py-6 lg:py-10">
       <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
         <!-- text - start -->
@@ -305,9 +306,11 @@
 
 <script>
 import guest from '~/middleware/guest';
+import Navbar from '~/components/home/Navbar.vue'
 export default {
   auth:false,
   middleware:guest,
+  components:{Navbar},
   data() {
     return {
       name: "",
